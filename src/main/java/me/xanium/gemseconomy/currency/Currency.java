@@ -17,7 +17,6 @@ import java.util.UUID;
 public class Currency {
 
     private UUID uuid;
-    private String singular;
     private String plural;
     private String symbol = null;
     private ChatColor color = ChatColor.WHITE;
@@ -27,14 +26,9 @@ public class Currency {
     private double defaultBalance = 0.0;
     private double exchangeRate = 0.0;
 
-    public Currency(UUID uuid, String singular, String plural) {
+    public Currency(UUID uuid, String plural) {
         this.uuid = uuid;
-        this.singular = singular;
         this.plural = plural;
-    }
-
-    public void setSingular(String singular) {
-        this.singular = singular;
     }
 
     public void setPlural(String plural) {
@@ -47,10 +41,6 @@ public class Currency {
 
     public UUID getUuid() {
         return this.uuid;
-    }
-
-    public String getSingular() {
-        return this.singular;
     }
 
     public String getPlural() {
@@ -77,11 +67,7 @@ public class Currency {
             amt.append(NumberFormat.getInstance().format(Double.parseDouble(s)));
         }
         amt.append(" ");
-        if (amount != 1.0) {
-            amt.append(this.getPlural().replace("_", " "));
-        } else {
-            amt.append(this.getSingular().replace("_", " "));
-        }
+        amt.append(this.getPlural().replace("_", " "));
         return amt.toString();
     }
 

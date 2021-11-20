@@ -55,7 +55,7 @@ public class PayCommand implements CommandExecutor {
                     sender.sendMessage(F.getCurrencyNotPayable().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getPlural()));
                     return;
                 }
-                if (!sender.hasPermission("gemseconomy.command.pay." + currency.getPlural().toLowerCase()) && !sender.hasPermission("gemseconomy.command.pay." + currency.getSingular().toLowerCase())) {
+                if (!sender.hasPermission("gemseconomy.command.pay." + currency.getPlural().toLowerCase()) && !sender.hasPermission("gemseconomy.command.pay." + currency.getPlural().toLowerCase())) {
                     sender.sendMessage(F.getPayNoPerms().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getPlural()));
                     return;
                 }

@@ -42,7 +42,6 @@ public class ChequeManager {
     public ItemStack write(String creatorName, Currency currency, double amount) {
         if(!currency.isPayable())return null;
 
-
         if (creatorName.equals("CONSOLE")) {
             creatorName = UtilString.colorize(plugin.getConfig().getString("cheque.console_name"));
         }
@@ -57,7 +56,7 @@ public class ChequeManager {
         meta.setLore(formatLore);
         nbt.getItem().setItemMeta(meta);
         nbt.setString(nbt_issuer, creatorName);
-        nbt.setString(nbt_currency, currency.getSingular());
+        nbt.setString(nbt_currency, currency.getPlural());
         nbt.setString(nbt_value, String.valueOf(amount));
         return nbt.getItem();
     }

@@ -170,7 +170,7 @@ public class MySQLStorage extends DataStorage {
                 boolean payable = set.getInt("payable") == 1;
                 ChatColor color = ChatColor.valueOf(set.getString("color"));
                 double exchangeRate = set.getDouble("exchange_rate");
-                Currency currency = new Currency(uuid, singular, plural);
+                Currency currency = new Currency(uuid, plural);
                 currency.setDefaultBalance(defaultBalance);
                 currency.setSymbol(symbol);
                 currency.setDecimalSupported(decimals);
@@ -180,7 +180,7 @@ public class MySQLStorage extends DataStorage {
                 currency.setExchangeRate(exchangeRate);
 
                 plugin.getCurrencyManager().add(currency);
-                UtilServer.consoleLog("Loaded currency: " + currency.getSingular() + " (" + currency.getPlural() + ")");
+                UtilServer.consoleLog("Loaded currency: " + " (" + currency.getPlural() + ")");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -221,15 +221,14 @@ public class MySQLStorage extends DataStorage {
         try (Connection connection = getHikari().getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(SAVE_CURRENCY);
             stmt.setString(1, currency.getUuid().toString());
-            stmt.setString(2, currency.getSingular());
-            stmt.setString(3, currency.getPlural());
-            stmt.setDouble(4, currency.getDefaultBalance());
-            stmt.setString(5, currency.getSymbol());
-            stmt.setInt(6, currency.isDecimalSupported() ? 1 : 0);
-            stmt.setInt(7, currency.isDefaultCurrency() ? 1 : 0);
-            stmt.setInt(8, currency.isPayable() ? 1 : 0);
-            stmt.setString(9, currency.getColor().name());
-            stmt.setDouble(10, currency.getExchangeRate());
+            stmt.setString(2, currency.getPlural());
+            stmt.setDouble(3, currency.getDefaultBalance());
+            stmt.setString(4, currency.getSymbol());
+            stmt.setInt(5, currency.isDecimalSupported() ? 1 : 0);
+            stmt.setInt(6, currency.isDefaultCurrency() ? 1 : 0);
+            stmt.setInt(7, currency.isPayable() ? 1 : 0);
+            stmt.setString(8, currency.getColor().name());
+            stmt.setDouble(9, currency.getExchangeRate());
 
             stmt.execute();
         } catch (SQLException e) {
@@ -485,7 +484,7 @@ public class MySQLStorage extends DataStorage {
 
             JSONObject obj = new JSONObject();
             for(Currency currency : plugin.getCurrencyManager().getCurrencies()){
-                obj.put(currency.getUuid().toString(), account.getBalance(currency.getSingular()));
+                obj.put(currency.getUuid().toString(), account.getBalance(currency.getPlural()));
             }
             String json = obj.toJSONString();
             stmt.setString(4, json);

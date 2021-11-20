@@ -168,7 +168,7 @@ public class Account {
 
     public double getBalance(String identifier){
         for(Currency currency : getBalances().keySet()){
-            if(currency.getSingular().equalsIgnoreCase(identifier)){
+            if(currency.getPlural().equalsIgnoreCase(identifier)){
                 return getBalances().get(currency);
             }
         }

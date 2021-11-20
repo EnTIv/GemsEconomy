@@ -67,7 +67,7 @@ public class YamlStorage extends DataStorage {
                 String path = "currencies." + uuid;
                 String single = getConfig().getString(path + ".singular");
                 String plural = getConfig().getString(path + ".plural");
-                Currency currency = new Currency(UUID.fromString(uuid), single, plural);
+                Currency currency = new Currency(UUID.fromString(uuid), plural);
                 currency.setColor(ChatColor.valueOf(getConfig().getString(path + ".color").toUpperCase()));
                 currency.setDecimalSupported(getConfig().getBoolean(path + ".decimalsupported"));
                 currency.setDefaultBalance(getConfig().getDouble(path + ".defaultbalance"));
@@ -76,7 +76,7 @@ public class YamlStorage extends DataStorage {
                 currency.setSymbol(getConfig().getString(path + ".symbol"));
                 currency.setExchangeRate(getConfig().getDouble(path + ".exchange_rate"));
                 plugin.getCurrencyManager().add(currency);
-                UtilServer.consoleLog("Loaded currency: " + currency.getSingular());
+                UtilServer.consoleLog("Loaded currency: " + currency.getPlural());
             }
         }
     }
@@ -84,7 +84,6 @@ public class YamlStorage extends DataStorage {
     @Override
     public void saveCurrency(Currency currency) {
         String path = "currencies." + currency.getUuid().toString();
-        getConfig().set(path + ".singular", currency.getSingular());
         getConfig().set(path + ".plural", currency.getPlural());
         getConfig().set(path + ".defaultbalance", currency.getDefaultBalance());
         getConfig().set(path + ".symbol", currency.getSymbol());
@@ -121,7 +120,7 @@ public class YamlStorage extends DataStorage {
         ConfigurationSection bsection = getConfig().getConfigurationSection(path + ".balances");
         if (bsection != null) {
             Set<String> balances = bsection.getKeys(false);
-            if (balances != null && !balances.isEmpty()) {
+            if (!balances.isEmpty()) {
                 for (String currency : balances) {
                     String path2 = path + ".balances." + currency;
                     double balance = getConfig().getDouble(path2);
