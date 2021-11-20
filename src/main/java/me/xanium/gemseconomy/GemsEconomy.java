@@ -20,10 +20,7 @@ import me.xanium.gemseconomy.file.Configuration;
 import me.xanium.gemseconomy.listeners.EconomyListener;
 import me.xanium.gemseconomy.logging.EconomyLogger;
 import me.xanium.gemseconomy.nbt.NMSVersion;
-import me.xanium.gemseconomy.utils.Metrics;
-import me.xanium.gemseconomy.utils.SchedulerUtils;
-import me.xanium.gemseconomy.utils.Updater;
-import me.xanium.gemseconomy.utils.UtilServer;
+import me.xanium.gemseconomy.utils.*;
 import me.xanium.gemseconomy.vault.VaultHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -120,10 +117,6 @@ public class GemsEconomy extends JavaPlugin {
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", updateForwarder);
-
-        if (isLogging()) {
-            getEconomyLogger().save();
-        }
 
         if(isChequesEnabled()){
             chequeManager = new ChequeManager(this);

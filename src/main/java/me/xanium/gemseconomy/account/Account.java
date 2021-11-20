@@ -24,8 +24,9 @@ import java.util.UUID;
 public class Account {
 
     private final UUID uuid;
+    private final Map<Currency, Double> balances;
+
     private String nickname;
-    private Map<Currency, Double> balances;
     private boolean canReceiveCurrency = true;
 
     public Account(UUID uuid, String nickname) {
@@ -167,7 +168,7 @@ public class Account {
 
     public double getBalance(String identifier){
         for(Currency currency : getBalances().keySet()){
-            if(currency.getPlural().equalsIgnoreCase(identifier) || currency.getSingular().equalsIgnoreCase(identifier)){
+            if(currency.getSingular().equalsIgnoreCase(identifier)){
                 return getBalances().get(currency);
             }
         }

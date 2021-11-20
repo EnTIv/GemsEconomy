@@ -21,7 +21,7 @@ public class UtilTime {
 
     public static String now() {
         final Calendar cal = Calendar.getInstance();
-        final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(cal.getTime());
     }
 
