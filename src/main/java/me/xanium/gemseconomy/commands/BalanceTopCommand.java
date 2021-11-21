@@ -73,7 +73,7 @@ public class BalanceTopCommand implements CommandExecutor {
             plugin.getDataStore().getTopList(currency, offset, ACCOUNTS_PER_PAGE, cachedTopListEntries -> {
                 sender.sendMessage(F.getBalanceTopHeader()
                         .replace("{currencycolor}", "" + curr.getColor())
-                        .replace("{currencyplural}", curr.getPlural())
+                        .replace("{currencyplural}", curr.getName())
                         .replace("{page}", String.valueOf(pageNumber)));
 
                 int num = (10 * (pageNumber - 1)) + 1;
@@ -86,7 +86,7 @@ public class BalanceTopCommand implements CommandExecutor {
                 if (cachedTopListEntries.isEmpty()) {
                     sender.sendMessage(F.getBalanceTopEmpty());
                 } else {
-                    sender.sendMessage(F.getBalanceTopNext().replace("{currencycolor}", "" + curr.getColor()).replace("{currencyplural}", curr.getPlural()).replace("{page}", String.valueOf((pageNumber + 1))));
+                    sender.sendMessage(F.getBalanceTopNext().replace("{currencycolor}", "" + curr.getColor()).replace("{currencyplural}", curr.getName()).replace("{page}", String.valueOf((pageNumber + 1))));
                 }
             });
         }

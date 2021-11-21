@@ -52,11 +52,11 @@ public class PayCommand implements CommandExecutor {
                 double amount;
 
                 if (!currency.isPayable()) {
-                    sender.sendMessage(F.getCurrencyNotPayable().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getPlural()));
+                    sender.sendMessage(F.getCurrencyNotPayable().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getName()));
                     return;
                 }
-                if (!sender.hasPermission("gemseconomy.command.pay." + currency.getPlural().toLowerCase()) && !sender.hasPermission("gemseconomy.command.pay." + currency.getPlural().toLowerCase())) {
-                    sender.sendMessage(F.getPayNoPerms().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getPlural()));
+                if (!sender.hasPermission("gemseconomy.command.pay." + currency.getName().toLowerCase()) && !sender.hasPermission("gemseconomy.command.pay." + currency.getName().toLowerCase())) {
+                    sender.sendMessage(F.getPayNoPerms().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getName()));
                     return;
                 }
                 if (currency.isDecimalSupported()) {
@@ -102,7 +102,7 @@ public class PayCommand implements CommandExecutor {
                                     }
                                     sender.sendMessage(F.getPayerMessage().replace("{currencycolor}", currency.getColor() + "").replace("{amount}", currency.format(amount)).replace("{player}", target.getDisplayName()));
                                 } else {
-                                    sender.sendMessage(F.getInsufficientFunds().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getPlural()));
+                                    sender.sendMessage(F.getInsufficientFunds().replace("{currencycolor}", "" + currency.getColor()).replace("{currency}", currency.getName()));
                                 }
                             } else {
                                 sender.sendMessage(F.getCannotReceive().replace("{player}", target.getDisplayName()));

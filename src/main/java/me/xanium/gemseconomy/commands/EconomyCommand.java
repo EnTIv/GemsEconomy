@@ -52,7 +52,7 @@ public class EconomyCommand implements CommandExecutor {
             }
             set(sender, args);
         } else if (args[0].equalsIgnoreCase("cache")) {
-            for(Account a : plugin.getAccountManager().getAccounts()){
+            for (Account a : plugin.getAccountManager().getAccounts()) {
                 UtilServer.consoleLog("Account: " + a.getNickname() + " cached");
             }
         } else {
@@ -153,7 +153,7 @@ public class EconomyCommand implements CommandExecutor {
                         } else {
                             sender.sendMessage(F.getTargetInsufficientFunds()
                                     .replace("{currencycolor}", currency.getColor() + "")
-                                    .replace("{currency}", currency.getPlural())
+                                    .replace("{currency}", currency.getName())
                                     .replace("{target}", target.getDisplayName()));
                         }
                     } else {
@@ -166,7 +166,7 @@ public class EconomyCommand implements CommandExecutor {
         });
     }
 
-    private void set(CommandSender sender, String[] args){
+    private void set(CommandSender sender, String[] args) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             if (args.length < 3) {
                 sender.sendMessage(F.getSetUsage());

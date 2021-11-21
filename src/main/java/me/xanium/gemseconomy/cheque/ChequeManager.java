@@ -56,7 +56,7 @@ public class ChequeManager {
         meta.setLore(formatLore);
         nbt.getItem().setItemMeta(meta);
         nbt.setString(nbt_issuer, creatorName);
-        nbt.setString(nbt_currency, currency.getPlural());
+        nbt.setString(nbt_currency, currency.getName());
         nbt.setString(nbt_value, String.valueOf(amount));
         return nbt.getItem();
     }

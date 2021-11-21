@@ -27,7 +27,7 @@ import java.util.UUID;
 public class YamlStorage extends DataStorage {
 
     private YamlConfiguration configuration;
-    private File file;
+    private final File file;
 
     public YamlStorage(File file) {
         super("YAML", false);
@@ -65,9 +65,8 @@ public class YamlStorage extends DataStorage {
             Set<String> currencies = section.getKeys(false);
             for (String uuid : currencies) {
                 String path = "currencies." + uuid;
-                String single = getConfig().getString(path + ".singular");
-                String plural = getConfig().getString(path + ".plural");
-                Currency currency = new Currency(UUID.fromString(uuid), plural);
+                String name = getConfig().getString(path + ".name");
+                Currency currency = new Currency(UUID.fromString(uuid), name);
                 currency.setColor(ChatColor.valueOf(getConfig().getString(path + ".color").toUpperCase()));
                 currency.setDecimalSupported(getConfig().getBoolean(path + ".decimalsupported"));
                 currency.setDefaultBalance(getConfig().getDouble(path + ".defaultbalance"));
@@ -76,7 +75,7 @@ public class YamlStorage extends DataStorage {
                 currency.setSymbol(getConfig().getString(path + ".symbol"));
                 currency.setExchangeRate(getConfig().getDouble(path + ".exchange_rate"));
                 plugin.getCurrencyManager().add(currency);
-                UtilServer.consoleLog("Loaded currency: " + currency.getPlural());
+                UtilServer.consoleLog("Loaded currency: " + currency.getName());
             }
         }
     }
@@ -84,7 +83,7 @@ public class YamlStorage extends DataStorage {
     @Override
     public void saveCurrency(Currency currency) {
         String path = "currencies." + currency.getUuid().toString();
-        getConfig().set(path + ".plural", currency.getPlural());
+        getConfig().set(path + ".name", currency.getName());
         getConfig().set(path + ".defaultbalance", currency.getDefaultBalance());
         getConfig().set(path + ".symbol", currency.getSymbol());
         getConfig().set(path + ".decimalsupported", currency.isDecimalSupported());
@@ -154,7 +153,7 @@ public class YamlStorage extends DataStorage {
         ConfigurationSection section = getConfig().getConfigurationSection("accounts");
         if (section != null) {
             Set<String> accounts = section.getKeys(false);
-            if (accounts != null && !accounts.isEmpty()) {
+            if (!accounts.isEmpty()) {
                 for (String uuid : accounts) {
                     String path = "accounts." + uuid;
                     String nick = getConfig().getString(path + ".nickname");

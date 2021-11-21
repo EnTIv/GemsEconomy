@@ -39,7 +39,7 @@ public class Account {
         if (hasEnough(currency, amount)) {
             GemsTransactionEvent event = new GemsTransactionEvent(currency, this, amount, TranactionType.WITHDRAW);
             SchedulerUtils.run(() -> Bukkit.getPluginManager().callEvent(event));
-            if(event.isCancelled())return false;
+            if (event.isCancelled()) return false;
 
             double finalAmount = getBalance(currency) - amount;
             this.modifyBalance(currency, finalAmount, true);
@@ -54,7 +54,7 @@ public class Account {
 
             GemsTransactionEvent event = new GemsTransactionEvent(currency, this, amount, TranactionType.DEPOSIT);
             SchedulerUtils.run(() -> Bukkit.getPluginManager().callEvent(event));
-            if(event.isCancelled())return false;
+            if (event.isCancelled()) return false;
 
             double finalAmount = getBalance(currency) + amount;
             this.modifyBalance(currency, finalAmount, true);
@@ -67,7 +67,7 @@ public class Account {
     public boolean convert(Currency exchanged, double exchangeAmount, Currency received, double amount) {
         GemsConversionEvent event = new GemsConversionEvent(exchanged, received, this, exchangeAmount, amount);
         SchedulerUtils.run(() -> Bukkit.getPluginManager().callEvent(event));
-        if(event.isCancelled())return false;
+        if (event.isCancelled()) return false;
 
         if (amount != -1) {
             double removed = getBalance(exchanged) - exchangeAmount;
@@ -81,27 +81,27 @@ public class Account {
         double rate;
         boolean receiveRate = false;
 
-        if(exchanged.getExchangeRate() > received.getExchangeRate()){
+        if (exchanged.getExchangeRate() > received.getExchangeRate()) {
             rate = exchanged.getExchangeRate();
-        }else{
+        } else {
             rate = received.getExchangeRate();
             receiveRate = true;
         }
 
-        if(!receiveRate){
+        if (!receiveRate) {
 
             double finalAmount = Math.round(exchangeAmount * rate);
             double removed = getBalance(exchanged) - exchangeAmount;
             double added = getBalance(received) + finalAmount;
 
-            if(GemsEconomy.getInstance().isDebug()){
+            if (GemsEconomy.getInstance().isDebug()) {
                 UtilServer.consoleLog("Rate: " + rate);
                 UtilServer.consoleLog("Finalized amount: " + finalAmount);
                 UtilServer.consoleLog("Amount to remove: " + exchanged.format(removed));
                 UtilServer.consoleLog("Amount to add: " + received.format(added));
             }
 
-            if(hasEnough(exchanged, exchangeAmount)){
+            if (hasEnough(exchanged, exchangeAmount)) {
                 this.modifyBalance(exchanged, removed, false);
                 this.modifyBalance(received, added, false);
                 GemsEconomy.getInstance().getDataStore().saveAccount(this);
@@ -115,14 +115,14 @@ public class Account {
         double removed = getBalance(exchanged) - finalAmount;
         double added = getBalance(received) + exchangeAmount;
 
-        if(GemsEconomy.getInstance().isDebug()){
+        if (GemsEconomy.getInstance().isDebug()) {
             UtilServer.consoleLog("Rate: " + rate);
             UtilServer.consoleLog("Finalized amount: " + finalAmount);
             UtilServer.consoleLog("Amount to remove: " + exchanged.format(removed));
             UtilServer.consoleLog("Amount to add: " + received.format(added));
         }
 
-        if(hasEnough(exchanged, finalAmount)){
+        if (hasEnough(exchanged, finalAmount)) {
             this.modifyBalance(exchanged, removed, false);
             this.modifyBalance(received, added, false);
             GemsEconomy.getInstance().getDataStore().saveAccount(this);
@@ -136,7 +136,7 @@ public class Account {
     public void setBalance(Currency currency, double amount) {
         GemsTransactionEvent event = new GemsTransactionEvent(currency, this, amount, TranactionType.SET);
         SchedulerUtils.run(() -> Bukkit.getPluginManager().callEvent(event));
-        if(event.isCancelled())return;
+        if (event.isCancelled()) return;
 
         getBalances().put(currency, amount);
         GemsEconomy.getInstance().getEconomyLogger().log("[BALANCE SET] Account: " + getDisplayName() + " were set to: " + currency.format(amount));
@@ -145,16 +145,16 @@ public class Account {
 
     /**
      * DO NOT USE UNLESS YOU HAVE VIEWED WHAT THIS DOES!
-     *
+     * <p>
      * This directly modifies the account balance for a currency, with the option of saving.
      *
      * @param currency - Currency to modify
-     * @param amount - Amount of cash to modify.
-     * @param save - Save the account or not. Should be done async!
+     * @param amount   - Amount of cash to modify.
+     * @param save     - Save the account or not. Should be done async!
      */
-    public void modifyBalance(Currency currency, double amount, boolean save){
+    public void modifyBalance(Currency currency, double amount, boolean save) {
         getBalances().put(currency, amount);
-        if(save){
+        if (save) {
             GemsEconomy.getInstance().getDataStore().saveAccount(this);
         }
     }
@@ -166,9 +166,9 @@ public class Account {
         return currency.getDefaultBalance();
     }
 
-    public double getBalance(String identifier){
-        for(Currency currency : getBalances().keySet()){
-            if(currency.getPlural().equalsIgnoreCase(identifier)){
+    public double getBalance(String identifier) {
+        for (Currency currency : getBalances().keySet()) {
+            if (currency.getName().equalsIgnoreCase(identifier)) {
                 return getBalances().get(currency);
             }
         }
@@ -191,11 +191,11 @@ public class Account {
         return uuid;
     }
 
-    public boolean hasEnough(double amount){
+    public boolean hasEnough(double amount) {
         return hasEnough(GemsEconomy.getInstance().getCurrencyManager().getDefaultCurrency(), amount);
     }
 
-    public boolean hasEnough(Currency currency, double amount){
+    public boolean hasEnough(Currency currency, double amount) {
         return getBalance(currency) >= amount;
     }
 

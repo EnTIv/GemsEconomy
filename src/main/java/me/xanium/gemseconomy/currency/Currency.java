@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Currency {
 
     private UUID uuid;
-    private String plural;
+    private String name;
     private String symbol = null;
     private ChatColor color = ChatColor.WHITE;
     private boolean decimalSupported = true;
@@ -26,13 +26,13 @@ public class Currency {
     private double defaultBalance = 0.0;
     private double exchangeRate = 0.0;
 
-    public Currency(UUID uuid, String plural) {
+    public Currency(UUID uuid, String name) {
         this.uuid = uuid;
-        this.plural = plural;
+        this.name = name;
     }
 
-    public void setPlural(String plural) {
-        this.plural = plural;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDefaultBalance(double defaultBalance) {
@@ -43,8 +43,8 @@ public class Currency {
         return this.uuid;
     }
 
-    public String getPlural() {
-        return this.plural;
+    public String getName() {
+        return this.name;
     }
 
     public double getDefaultBalance() {
@@ -67,7 +67,7 @@ public class Currency {
             amt.append(NumberFormat.getInstance().format(Double.parseDouble(s)));
         }
         amt.append(" ");
-        amt.append(this.getPlural().replace("_", " "));
+        amt.append(this.getName().replace("_", " "));
         return amt.toString();
     }
 

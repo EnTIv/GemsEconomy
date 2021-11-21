@@ -8,6 +8,7 @@
 
 package me.xanium.gemseconomy;
 
+import me.xanium.gemseconomy.account.Account;
 import me.xanium.gemseconomy.account.AccountManager;
 import me.xanium.gemseconomy.bungee.UpdateForwarder;
 import me.xanium.gemseconomy.cheque.ChequeManager;
@@ -26,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class GemsEconomy extends JavaPlugin {
 

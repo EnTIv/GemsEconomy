@@ -17,8 +17,8 @@ import java.util.UUID;
 
 public class AccountManager {
 
-    private GemsEconomy plugin;
-    private List<Account> accounts;
+    private final GemsEconomy plugin;
+    private final List<Account> accounts;
 
     public AccountManager(GemsEconomy plugin) {
         this.plugin = plugin;
@@ -45,10 +45,10 @@ public class AccountManager {
         return plugin.getDataStore().loadAccount(uuid);
     }
 
-    public void removeAccount(UUID uuid){
-        for(int i = 0; i < this.accounts.size(); i++){
+    public void removeAccount(UUID uuid) {
+        for (int i = 0; i < this.accounts.size(); i++) {
             Account a = getAccounts().get(i);
-            if(a.getUuid().equals(uuid)){
+            if (a.getUuid().equals(uuid)) {
                 accounts.remove(i);
                 break;
             }
@@ -56,7 +56,7 @@ public class AccountManager {
     }
 
     public void add(Account account) {
-        if(this.accounts.contains(account))return;
+        if (this.accounts.contains(account)) return;
 
         this.accounts.add(account);
     }

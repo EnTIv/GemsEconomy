@@ -18,7 +18,7 @@ public class CurrencyManager {
 
     public boolean currencyExist(String name) {
         for (Currency currency : currencies) {
-            if (currency.getPlural().equalsIgnoreCase(name)) {
+            if (currency.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -27,7 +27,7 @@ public class CurrencyManager {
 
     public Currency getCurrency(String name) {
         for (Currency currency : currencies) {
-            if (currency.getPlural().equalsIgnoreCase(name)) {
+            if (currency.getName().equalsIgnoreCase(name)) {
                 return currency;
             }
         }
@@ -50,12 +50,12 @@ public class CurrencyManager {
         return null;
     }
 
-    public void createNewCurrency(String plural) {
-        if (currencyExist(plural)) {
+    public void createNewCurrency(String name) {
+        if (currencyExist(name)) {
             return;
         }
 
-        Currency currency = new Currency(UUID.randomUUID(), plural);
+        Currency currency = new Currency(UUID.randomUUID(), name);
         currency.setExchangeRate(1.0);
         if (currencies.size() == 0) {
             currency.setDefaultCurrency(true);

@@ -110,7 +110,7 @@ public class ChequeCommand implements CommandExecutor {
                                     player.sendMessage(F.getChequeSucess());
                                     return true;
                                 }else{
-                                    player.sendMessage(F.getInsufficientFunds().replace("{currencycolor}", currency.getColor()+"").replace("{currency}", currency.getPlural()));
+                                    player.sendMessage(F.getInsufficientFunds().replace("{currencycolor}", currency.getColor()+"").replace("{currency}", currency.getName()));
                                 }
                             } else {
                                 player.sendMessage(F.getUnknownCurrency());
@@ -125,7 +125,7 @@ public class ChequeCommand implements CommandExecutor {
                             player.sendMessage(F.getChequeSucess());
                             return true;
                         }else{
-                            player.sendMessage(F.getInsufficientFunds().replace("{currencycolor}", defaultCurrency.getColor()+"").replace("{currency}", defaultCurrency.getPlural()));
+                            player.sendMessage(F.getInsufficientFunds().replace("{currencycolor}", defaultCurrency.getColor()+"").replace("{currency}", defaultCurrency.getName()));
                         }
                     } else {
                         player.sendMessage(F.getUnvalidAmount());
